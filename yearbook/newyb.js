@@ -1,8 +1,4 @@
-var SD = prompt("1 for SPTiberian, 2 for Davka Bodel.");
-var hebrew = prompt("Input Hebrew text.");
-var english;
-var map;
-const mapSPT = {
+const SPTmap = {
   ק: "q",
   ו: "w",
   ר: "r",
@@ -38,7 +34,7 @@ const mapSPT = {
 const DBmap = {
   ס: "q",
   ק: "w",
-  ר: "e",
+  ו: "e",
   ע: "r",
   פ: "t",
   ש: "y",
@@ -62,14 +58,23 @@ const DBmap = {
   ג: "b",
   מ: "n",
   ם: "m",
+  א: "`",
   " ": " ",
-  ".": "*",
-  ",": "\\",
 };
 
-(SD===1) ? map = mapSPT: map = DBmap;
-
-for (var i = 0; i < hebrew.length; i++) {
-    english += map[hebrew[i]] || hebrew[i];
+function H2E(hebrewWord, map) {
+  var englishArray = hebrewWord.split("");
+  englishArray = englishArray.map(function (char) {
+    return map[char] || char;
+  });
+  var englishWord = englishArray.reverse().join("");
+  return englishWord;
 }
-english.reverse();
+
+function DavkaB(heb) {
+  return H2E(heb, DBmap);
+}
+
+function SP(heb) {
+  return H2E(heb, SPTmap);
+}
